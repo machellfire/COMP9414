@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0077)http://mahler.cse.unsw.edu.au/webcms2/course/menu.php?cid=2294&color=lavendar -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+ <title>COMP9414 - Menu</title>
+
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<script type="text/javascript" src="jquery-1.3.2.min.js"></script><style type="text/css"></style>
+<script type="text/javascript" src="new.jquery-ui.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="new.jquery-ui.custom.css">
+<link rel="stylesheet" type="text/css" href="menu.css">
+<style type="text/css">
+body {color:#000000;background-color:#CCCCFF;}
+a {color:#000000;}
+input.menu {background:#CCCCFF; color:#000000; font-size:x-small; margin:0; padding:0; border-width:0; width:12px; height:15px}
+input.menu:hover {color:#000000;background:#FFFFCC;}
+</style>
+<script language="JavaScript">
+
+function checkForm(form)
+{
+	if (form.username.value == "")
+	{
+		alert("Please enter username");
+		form.username.focus();
+		return false;
+	}
+	if (form.password.value=="")
+	{
+		alert("Pleaser enter password");
+		form.password.focus();
+		return false;
+	}
+	return true;
+}
+function expand(name) {
+	var show = document.getElementById(name).style.display;
+	var view = "none"
+	if(show == "none")
+		view = "block";
+	document.getElementById(name).style.display = view;
+}
+
+function alterValue(button) {
+	if(button.value == "+")
+		button.value = "-";
+	else if(button.value == "-")
+		button.value = "+";
+	return true;
+}
+</script>
+</head>
+<body marginwidth="0" marginheight="0">
+<nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/login/login.php" target="_top">WebCMS<small>2</small></a></nobr><span class="at">@</span><nobr><a href="http://www.cse.unsw.edu.au/" target="_top"><span class="cse">CSE</span></a></nobr><span class="at">@</span><nobr><a href="http://www.unsw.edu.au/" target="_top"><span class="cse">UNSW</span></a></nobr><br><p><span class="ccode"><a target="_top" href="http://www.cse.unsw.edu.au/~cs9414/">COMP9414</a></span>13s1<br><span class="title">Artificial Intelligence</span></p><div class="sec">•&nbsp;<b><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/notice/index.php?cid=2294&color=lavendar" target="main" title="You can view course notices here" onmouseover="window.status=&quot;&quot;; return true">Notices</a></nobr></b><br>
+<div id="l15908"></div></div><div class="sec">•&nbsp;<b><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/calendar/index.php?cid=2294&color=lavendar" target="main" title="You can view course events here" onmouseover="window.status=&quot;&quot;; return true">Calendar</a></nobr></b><br>
+<div id="l15909"></div></div><div class="sec">•&nbsp;<b><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/intro/index.php?cid=2294&color=lavendar" target="main" title="Course intro" onmouseover="window.status=&quot;&quot;; return true">Course Outline</a></nobr></b><br>
+<div id="l15910"></div></div><div class="sec"><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/course/menu.php?cid=2294&color=lavendar#" onclick="expand(&quot;l15911&quot;)">+</a></nobr>&nbsp;<b><nobr>Administration</nobr></b><br>
+<div id="l15911">|–&nbsp;<nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/class/index.php?cid=2294&color=lavendar" target="main" title="You can view classes time here" onmouseover="window.status=&quot;&quot;; return true">Classes</a></nobr><br>
+|–&nbsp;<nobr><a href="http://www.cse.unsw.edu.au/~billw/prologdict.html" target="main">Prolog Dictionary</a></nobr><br>
+|–&nbsp;<nobr><a href="http://www.cse.unsw.edu.au/~cs9414/13s1/homecomputing.html" target="main">Home Computing</a></nobr><br>
+|–&nbsp;<nobr><a href="http://www.swi-prolog.org/download/stable" target="main">Prolog Download</a></nobr><br>
+</div></div><div class="sec"><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/course/menu.php?cid=2294&color=lavendar#" onclick="expand(&quot;l15913&quot;)">+</a></nobr>&nbsp;<b><nobr>CourseWork</nobr></b><br>
+<div id="l15913">|–&nbsp;<nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/works/index.php?inc=LN&cid=2294&color=lavendar" target="main" title="Lecture notes" onmouseover="window.status=&quot;&quot;; return true">Lectures</a></nobr><br>
+|–&nbsp;<nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/works/index.php?inc=LB&cid=2294&color=lavendar" target="main" title="Lab exercises" onmouseover="window.status=&quot;&quot;; return true">Labs</a></nobr><br>
+|–&nbsp;<nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/works/index.php?inc=TU&cid=2294&color=lavendar" target="main" title="Tutorial exercises" onmouseover="window.status=&quot;&quot;; return true">Exercises</a></nobr><br>
+|–&nbsp;<nobr><a href="http://lectopia.telt.unsw.edu.au/lectopia/lectopia.lasso?ut=475" target="main">Lectopia (Mon)</a></nobr><br>
+|–&nbsp;<nobr><a href="http://lectopia.telt.unsw.edu.au/lectopia/lectopia.lasso?ut=1327" target="main">Lectopia (Wed)</a></nobr><br>
+|–&nbsp;<nobr><a href="https://www.youtube.com/watch?v=rw6CJFlJZ60" target="main">YouTube (2012)</a></nobr><br>
+</div></div><div class="sec"><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/course/menu.php?cid=2294&color=lavendar#" onclick="expand(&quot;l16187&quot;)">+</a></nobr>&nbsp;<b><nobr>Assignments</nobr></b><br>
+<div id="l16187">|–&nbsp;<nobr><a href="http://www.cse.unsw.edu.au/~cs9414/Assignments/2013s1/prolog_spec.html" target="main">hw1 Prolog</a></nobr><br>
+</div></div><div class="sec"><div id="l15915"></div></div><div class="sec"><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/course/menu.php?cid=2294&color=lavendar#" onclick="expand(&quot;l15919&quot;)">+</a></nobr>&nbsp;<b><nobr>Staff</nobr></b><br>
+<div id="l15919">|–&nbsp;<nobr><a href="http://www.cse.unsw.edu.au/~blair/?cid=2294&color=lavendar" target="main">Alan Blair</a></nobr><br>
+|–&nbsp;<nobr><a href="http://www.cse.unsw.edu.au/db/staff/staff_details.php?ID=mit&cid=2294&color=lavendar" target="main">Michael Thielscher</a></nobr><br>
+</div></div><div class="sec">•&nbsp;<b><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/messageboard/index.php?cid=2294&color=lavendar" target="main" title="You can post messages here" onmouseover="window.status=&quot;&quot;; return true">MessageBoard</a></nobr></b><br>
+<div id="l16113"></div></div><p>• <nobr><b></b></nobr><b><nobr><a href="http://mahler.cse.unsw.edu.au/webcms2/course/help.php" target="main" title="Click here for WebCMS help" onmouseover="window.status=&quot;&quot;; return true">WebCMS Info</a></nobr></b></p><form method="post" action="http://mahler.cse.unsw.edu.au/webcms2/course/index.php?cid=2294&color=lavendar" target="_top" onsubmit="return checkForm(this)">
+<p><b>Status:</b><br>Not Logged In</p><p>Username:<br><input type="text" name="username" value="" size="10"><br>Password:<br><input type="password" name="password" value="" size="10"><br><br><input type="submit" name="" value="Login"></p><p style="font-size:7pt;">CRICOS Provider No. 00098G</p>
+</form>
+
+
+</body></html>

@@ -1,0 +1,9 @@
+body{font-family:arial,sans-serif;font-size:9pt;margin:0 0 0 0;padding:5px 0 0 5px;}
+div.sec{margin-top:7px;margin-bottom:5px;}
+span.ccode{font-size:13pt;font-weight:bold;}
+span.title{font-size:11pt;}
+span.cse{font-size:8pt;}
+span.at{font-size:7pt;}
+a {color:#FFFFFF;text-decoration:none;}
+a.hover, a:hover {color:#CC0000;background:#FFFFCC;}
+input {font-size:8pt;}

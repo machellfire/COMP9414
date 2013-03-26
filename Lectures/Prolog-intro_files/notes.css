@@ -1,0 +1,27 @@
+   body { color: black; background: white ;
+          font-family: Times, serif;
+          font-size: 12pt; }
+   h2  { color: black; background: white ;
+          font-family: Helvetica, sans-serif;
+          font-size: 14;
+          margin-bottom: 0.5em;
+          margin-top: 0.5em; }
+   h3  { color: red; background: white ;
+          font-family: Helvetica, sans-serif;
+          font-size: 13pt;
+	  font-color: red;
+          margin-bottom: 0.5em; }
+   p   {  margin-bottom: 6pt;
+          text-indent: 0 em;
+          color: black; background: white;
+          font-family: Times, serif;
+          font-size: 12pt; }
+   table tr td th { color: black;
+          background: white ;
+          font-family: Times, serif;
+	  border:solid windowtext 1pt;
+	  padding:0cm;
+          font-size: 12pt; }
+   sub sup { color: black; background: white ;
+          font-family: Times, serif;
+          font-size: 10pt; }
