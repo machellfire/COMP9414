@@ -21,4 +21,12 @@ sumsq_div3or5([_|Tail], Sum) :-
 
 % Question 2
 %
+givers(Giver1, Giver2) :-
+  gives(Giver1, Giver2, Thing1),
+  gives(Giver2, Giver1, Thing2),
+  not(Giver1 == Giver2),
+  not(Thing1 == Thing2).
+
+% Question 3
+%
 
