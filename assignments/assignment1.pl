@@ -53,9 +53,9 @@ function_table([Head|Tail], Function, ResultList) :-
 chop_down([], []).
 chop_down([Head|Tail], NewList) :-
   is_decrentedal(Head, Tail),
-  !,
   chop_down(Tail, NewList).
 chop_down([Head|Tail], [Head|NewList]) :-
+  not(is_decrentedal(Head, Tail)),
   chop_down(Tail, NewList).
 
 is_decrentedal(Number, [Head|_]) :-
@@ -73,3 +73,25 @@ tree_eval(Value, tree(Left, Op, Right), Eval) :-
   Expression =.. [Op, L, R],
   Eval is Expression.
 
+
+% Question: Last
+%
+height_if_balanced(tree(empty, _, empty), 1).
+height_if_balanced(tree(Left, _, empty), HiB) :-
+  height_if_balanced(Left, SubCount),
+  HiB is SubCount + 1.
+height_if_balanced(tree(empty, _, Right), HiB) :-
+  height_if_balanced(Right, SubCount),
+  HiB is SubCount + 1.
+height_if_balanced(tree(L, _, R), HiB) :-
+  height_if_balanced(L, L_height),
+  height_if_balanced(R, R_height),
+  max(L_height, R_height, Longest),
+  HiB is Longest + 1.
+
+% max(A, B, C) binds C to the larger of A and B.
+%
+max(A, B, A) :-
+  A > B.
+max(A, B, B) :-
+  A =< B.
