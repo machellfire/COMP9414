@@ -61,5 +61,15 @@ chop_down([Head|Tail], [Head|NewList]) :-
 is_decrentedal(Number, [Head|_]) :-
   Number =:= Head + 1.
 
+
 % Question 5
 %
+tree_eval(Value, tree(empty, z, empty), Value).
+tree_eval(_, tree(empty, Num, empty), Num).
+tree_eval(Value, tree(Left, Op, Right), Eval) :-
+  tree_eval(Value, Left, L),
+  tree_eval(Value, Right, R),
+  !,
+  Expression =.. [Op, L, R],
+  Eval is Expression.
+
