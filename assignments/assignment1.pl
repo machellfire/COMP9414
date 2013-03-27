@@ -50,3 +50,16 @@ function_table([Head|Tail], Function, ResultList) :-
 
 % Question 4
 %
+chop_down([], []).
+chop_down([Head|Tail], NewList) :-
+  is_decrentedal(Head, Tail),
+  !,
+  chop_down(Tail, NewList).
+chop_down([Head|Tail], [Head|NewList]) :-
+  chop_down(Tail, NewList).
+
+is_decrentedal(Number, [Head|_]) :-
+  Number =:= Head + 1.
+
+% Question 5
+%
