@@ -7,18 +7,21 @@
 %
 sumsq_div3or5([], 0).
 sumsq_div3or5([Head|Tail], Sum) :-
-  0 is Head mod 3,
-  !,
+  is_mod(3, Head),
   sumsq_div3or5(Tail, SubTotal),
   Sum is Head * Head + SubTotal.
 sumsq_div3or5([Head|Tail], Sum) :-
-  0 is Head mod 5,
-  !,
+  is_mod(5, Head),
   sumsq_div3or5(Tail, SubTotal),
   Sum is Head * Head + SubTotal.
-sumsq_div3or5([_|Tail], Sum) :-
+sumsq_div3or5([Head|Tail], Sum) :-
+  not(is_mod(3, Head)),
+  not(is_mod(5, Head)),
   sumsq_div3or5(Tail, SubTotal),
   Sum is SubTotal.
+
+is_mod(Modula, Number) :-
+  0 is Number mod Modula.
 
 
 % Question 2
@@ -37,6 +40,7 @@ log_table([Head|Tail], ResultList) :-
   log_table(Tail, SubList),
   X is log(Head),
   ResultList = [[Head, X]|SubList].
+
 
 % Question 3b
 %
@@ -63,19 +67,21 @@ is_decrentedal(Number, [Head|_]) :-
 
 
 % Question 5
+% Binds Eval to the result of evaluating the expression-tree 
+% Tree, with the variable z set equal to the specified Value.
 %
 tree_eval(Value, tree(empty, z, empty), Value).
 tree_eval(_, tree(empty, Num, empty), Num).
 tree_eval(Value, tree(Left, Op, Right), Eval) :-
   tree_eval(Value, Left, L),
   tree_eval(Value, Right, R),
-  !,
   Expression =.. [Op, L, R],
   Eval is Expression.
 
 
 % Question: Last
 %
+height_if_balanced(empty, 0).
 height_if_balanced(tree(empty, _, empty), 1).
 height_if_balanced(tree(Left, _, empty), HiB) :-
   height_if_balanced(Left, SubCount),
@@ -86,6 +92,12 @@ height_if_balanced(tree(empty, _, Right), HiB) :-
 height_if_balanced(tree(L, _, R), HiB) :-
   height_if_balanced(L, L_height),
   height_if_balanced(R, R_height),
+  1 < abs(L_height - R_height),
+  HiB is -1.
+height_if_balanced(tree(L, _, R), HiB) :-
+  height_if_balanced(L, L_height),
+  height_if_balanced(R, R_height),
+  1 >= abs(L_height - R_height),
   max(L_height, R_height, Longest),
   HiB is Longest + 1.
 
