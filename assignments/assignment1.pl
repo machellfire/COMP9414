@@ -7,20 +7,20 @@
 %
 sumsq_div3or5([], 0).
 sumsq_div3or5([Head|Tail], Sum) :-
-	div3or5(Head),
-  sumsq_div3or5(Tail, SubTotal),
-  Sum is Head * Head + SubTotal.
+    div3or5(Head),
+    sumsq_div3or5(Tail, SubTotal),
+    Sum is Head * Head + SubTotal.
 sumsq_div3or5([Head|Tail], Sum) :-
-  not(div3or5(Head)),
-	sumsq_div3or5(Tail, SubTotal),
-  Sum is SubTotal.
+    not(div3or5(Head)),
+    sumsq_div3or5(Tail, SubTotal),
+    Sum is SubTotal.
 
 div3or5(Number) :-
 	is_mod(3, Number);
 	is_mod(5, Number).
 
 is_mod(Modula, Number) :-
-  0 is Number mod Modula.
+    0 is Number mod Modula.
 
 
 % Question 2
