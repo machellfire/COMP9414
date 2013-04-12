@@ -7,18 +7,17 @@
 %
 sumsq_div3or5([], 0).
 sumsq_div3or5([Head|Tail], Sum) :-
-  is_mod(3, Head),
+	div3or5(Head),
   sumsq_div3or5(Tail, SubTotal),
   Sum is Head * Head + SubTotal.
 sumsq_div3or5([Head|Tail], Sum) :-
-  is_mod(5, Head),
-  sumsq_div3or5(Tail, SubTotal),
-  Sum is Head * Head + SubTotal.
-sumsq_div3or5([Head|Tail], Sum) :-
-  not(is_mod(3, Head)),
-  not(is_mod(5, Head)),
-  sumsq_div3or5(Tail, SubTotal),
+  not(div3or5(Head)),
+	sumsq_div3or5(Tail, SubTotal),
   Sum is SubTotal.
+
+div3or5(Number) :-
+	is_mod(3, Number);
+	is_mod(5, Number).
 
 is_mod(Modula, Number) :-
   0 is Number mod Modula.
@@ -82,13 +81,13 @@ tree_eval(Value, tree(Left, Op, Right), Eval) :-
 % Question: Last
 %
 height_if_balanced(empty, 0).
-height_if_balanced(tree(empty, _, empty), 1).
-height_if_balanced(tree(Left, _, empty), HiB) :-
-  height_if_balanced(Left, SubCount),
-  HiB is SubCount + 1.
-height_if_balanced(tree(empty, _, Right), HiB) :-
-  height_if_balanced(Right, SubCount),
-  HiB is SubCount + 1.
+%height_if_balanced(tree(empty, _, empty), 1).
+%height_if_balanced(tree(Left, _, empty), HiB) :-
+%  height_if_balanced(Left, SubCount),
+%  HiB is SubCount + 1.
+%height_if_balanced(tree(empty, _, Right), HiB) :-
+%  height_if_balanced(Right, SubCount),
+%  HiB is SubCount + 1.
 height_if_balanced(tree(L, _, R), HiB) :-
   height_if_balanced(L, L_height),
   height_if_balanced(R, R_height),
