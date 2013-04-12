@@ -1,0 +1,115 @@
+
+<!-- saved from url=(0172)http://mahler.cse.unsw.edu.au/webcms2/course/showfile.php?cid=2294&color=lavendar&addr=/home/dbapache/data/webcms2/COMP/9414/2013/s1/Tutorials/COMP9414-Exercises-Logic.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+  <title>COMP9414/9814 Exercises Week 4</title>
+<style><!-- A {text-decoration:none} --></style><style type="text/css"></style></head>
+
+<body alink="#660000" vlink="#000066" link="#800066" bgcolor="#ffffff">
+
+<h2><p></p><center><b><font color="#000066">
+COMP9414/9814 Artificial Intelligence<br>
+Session 1, 2013</font></b></center><p></p></h2>
+
+<h2><p></p><center><b>Exercises - Week 4 - Logic</b></center><p></p></h2>
+
+<hr align="left">
+<ol>
+
+<li><b>Propositional logic</b>
+
+<p>
+Consider a logic language with four proposition symbols: <tt>p<sub>1</sub></tt>, <tt>p<sub>2</sub></tt>, <tt>q<sub>1</sub></tt>, <tt>q<sub>2</sub></tt>.
+How many models are there for the following sentences?</p>
+<ol type="a">
+<li> <tt> p<sub>1</sub> &#8744; p<sub>2</sub></tt>
+</li><li> <tt> (q<sub>1</sub> &lt;= p<sub>1</sub>) &#8743; (q<sub>2</sub> &lt;= p<sub>2</sub>)</tt>
+</li><li> <tt> (p<sub>1</sub> &lt;= ¬p<sub>1</sub>) &#8743; (¬q<sub>1</sub> &lt;= q<sub>1</sub>) &#8743; (p<sub>2</sub> &lt;=&gt; q<sub>2</sub>)</tt>
+</li></ol>
+
+<p></p>
+
+</li><li><b>First-order logic</b>
+
+<p>
+Represent the following sentences in first-order logic, using a consistent vocabulary.</p>
+<ol type="a">
+<li> For any natural number there is a larger natural number.
+</li><li> Every person who buys a policy is smart, but some smart people don't buy a policy.
+</li><li> All barbers in town shave only those men in town who do not shave themselves.
+</li></ol>
+
+<p></p>
+
+</li><li><b>Logical consequences</b>
+
+<p>Which of the following statements are true?</p>
+<ol type="a">
+<li> <tt>¬p(a)</tt> is a logical consequence of &nbsp;<tt>(p(b) &lt;= p(a))&nbsp;&#8743;&nbsp;¬p(b)</tt>.
+</li><li> <tt>¬p(b)</tt> is a logical consequence of &nbsp;<tt>(p(b) &lt;= p(a))&nbsp;&#8743;&nbsp;¬p(a)</tt>.
+</li><li> <tt>&#8704;X&#8707;Y&nbsp;p(X,Y)</tt> is a logical consequence of &nbsp;<tt>&#8707;Y&#8704;X&nbsp;p(X,Y)</tt>.
+</li><li> <tt>&#8707;X&#8704;Y&nbsp;p(X,Y)</tt> is a logical consequence of &nbsp;<tt>&#8704;Y&#8707;X&nbsp;p(X,Y)</tt>.
+</li></ol>
+
+<p></p>
+
+</li><li><b>Game Description Language</b>
+<p>
+This exercise has the goal of modifying the rules for Noughts And Crosses so as to describe a variant in which the players mark cells <i>simultaneously</i>.</p>
+<ol type="a">
+<li><p>Let's start with the rules shown below.</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;init(control(xplayer))</tt></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>
+  
+  &nbsp;&nbsp;&nbsp;legal(xplayer, noop) &lt;= true(control(oplayer))</td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;legal(oplayer, noop) &lt;= true(control(xplayer))</td></tr><tr><td>
+
+  &nbsp;&nbsp;&nbsp;legal(P,mark(M,N)) &lt;= true(cell(M,N,b)) &#8743; true(control(P))</td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>
+
+  &nbsp;&nbsp;&nbsp;next(control(xplayer)) &lt;= true(control(oplayer))</td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(control(oplayer)) &lt;= true(control(xplayer))
+  
+</td></tr></tbody></table>
+<p>How can all this be simplified when in each round both players get to choose an empty cell to mark?</p>
+
+</li><li><p>Now modify the following update rules in such a way that if both players choose the same cell, then the cell will be marked with <tt>x</tt>. (Hence the game isn't fair!)</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,x))</tt></td><td> &lt;= </td><td>does(xplayer,mark(M,N))</td></tr><tr><td></td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,o))</td><td> &lt;= </td><td> does(oplayer,mark(M,N))</td></tr><tr><td></td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,W))</td><td> &lt;= </td><td>true(cell(M,N,W)) &#8743;
+  </td></tr><tr><td></td><td></td><td>does(P,mark(J,K)) &#8743;
+  </td></tr><tr><td></td><td></td><td>(distinct(M,J) &#8744; distinct(N,K))</td></tr><tr><td></td></tr><tr><td>
+  
+</td></tr></tbody></table>
+
+</li><li><p>Finally, you need to change the goal rules in order to let the game end in a draw if both players complete a line at the same time.</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;goal(xplayer,100) </tt></td><td> &lt;= </td><td> line(x)</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(xplayer, 50) </td><td> &lt;= </td><td> draw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(xplayer, 0) </td><td> &lt;= </td><td> line(o)</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer,100) </td><td> &lt;= </td><td> line(o)</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer, 50) </td><td> &lt;= </td><td> draw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer, 0) </td><td> &lt;= </td><td> line(x)</td></tr><tr><td>
+  
+</td></tr></tbody></table>  
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>&nbsp;&nbsp;&nbsp;draw &lt;=
+¬line(x) &#8743; ¬line(o) &#8743; ¬open
+  </tt>
+</td></tr></tbody></table>  
+<p>How?</p>
+</li></ol>
+<p>
+
+</p></li></ol>
+
+
+
+<p>
+</p><hr align="left">
+
+
+
+</body></html>

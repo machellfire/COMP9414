@@ -1,0 +1,115 @@
+
+<!-- saved from url=(0175)http://mahler.cse.unsw.edu.au/webcms2/course/showfile.php?cid=2294&color=lavendar&addr=/home/dbapache/data/webcms2/COMP/9414/2013/s1/Tutorials/COMP9414-Exercises-Planning.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+  <title>COMP9414/9814 Exercises Week 5</title>
+<style><!-- A {text-decoration:none} --></style><style type="text/css"></style></head>
+
+<body alink="#660000" vlink="#000066" link="#800066" bgcolor="#ffffff">
+
+<h2><p></p><center><b><font color="#000066">
+COMP9414/9814 Artificial Intelligence<br>
+Session 1, 2013</font></b></center><p></p></h2>
+
+<h2><p></p><center><b>Exercises - Week 5 - Planning</b></center><p></p></h2>
+
+<hr align="left">
+This exercise is about unlocking the mystery behind the the following planning problem, described as single-player game but written in Prolog-syntax, and then solving it.
+<pre>  role(you).
+
+  succ(1,2).
+  succ(2,3).
+  succ(3,4).
+  succ(4,5).
+  succ(5,6).
+  succ(6,7).
+  succ(7,8).
+
+  init(row(1,one_coin)).
+  init(row(Y,one_coin)) :- succ(X,Y).
+  init(step(1)).
+
+  legal(you,jump(X,Y)) :- true(row(X,one_coin)), true(row(Y,one_coin)),
+                          ( unsw(X,Y) ; unsw(Y,X) ).
+
+  uts(X,Y) :- succ(X,Y).
+  uts(X,Y) :- succ(X,Z), true(row(Z,empty)), uts(Z,Y).
+
+  usyd(X,Y) :- succ(X,Z), true(row(Z,empty)), usyd(Z,Y).
+  usyd(X,Y) :- succ(X,Z), true(row(Z,one_coin)), uts(Z,Y).
+
+  unsw(X,Y) :- succ(X,Z), true(row(Z,empty)), unsw(Z,Y).
+  unsw(X,Y) :- succ(X,Z), true(row(Z,one_coin)), usyd(Z,Y).
+  unsw(X,Y) :- succ(X,Z), true(row(Z,two_coins)), uts(Z,Y).
+
+  next(row(X,empty))     :- does(you,jump(X,Y)).
+  next(row(Y,two_coins)) :- does(you,jump(X,Y)).
+  next(row(X,C))         :- true(row(X,C)),
+                            does(you,jump(Y,Z)), distinct(X,Y), distinct(X,Z).
+  next(step(Y))          :- true(step(X)), succ(X,Y).
+
+  terminal :- not open.
+  open     :- legal(you,M).
+  
+  goal(you,100) :- true(step(5)).
+  goal(you,  0) :- not true(step(5)).
+</pre>
+<p></p>
+<hr align="left">
+
+<ol>
+
+<li><b>Logic Programming -- Answers</b>
+<p>
+Compute <b>all</b> answers to the query &nbsp;<tt>?- init(F)</tt>.
+
+</p><p>Hint: You should obtain 9 different answers for variable &nbsp;<tt>F</tt>. These 9 features together are the initial game state. Can you draw a simple diagram to visualise it?
+
+</p></li><li><b>Logic Programming -- Derivations</b>
+
+<p>
+The key to unlocking the mystery is to understand the meaning of the three recursive relations, &nbsp;<tt>unsw, usyd, uts</tt>. To get the idea, suppose given the following facts:
+</p><pre>  true(row(1,one_coin))
+  true(row(2,one_coin))
+  true(row(3,empty))
+  true(row(4,empty))
+  true(row(5,one_coin))
+  true(row(6,one_coin))
+  true(row(7,two_coins))
+  true(row(8,one_coin))
+</pre> 
+  <p>To which of the following queries will the answer be <tt>yes</tt>?
+</p><ol type="a">
+  <li><tt>?- uts(2,5)</tt>
+  </li><li><tt>?- uts(2,6)</tt>
+  </li><li><tt>?- usyd(1,5)</tt>
+  </li><li><tt>?- usyd(1,6)</tt>
+  </li><li><tt>?- unsw(1,6)</tt>
+  </li><li><tt>?- unsw(1,7)</tt>
+  </li><li><tt>?- unsw(6,8)</tt>
+</li></ol>
+<p>Can you now guess what &nbsp;<tt>unsw(m,n)</tt> is "counting"?
+
+</p></li><li><b>Planning -- Action Preconditions and Effects</b>
+
+<p>
+</p><ol type="a">
+<li>Next, have a look at the program clauses for &nbsp;<tt>legal(you,jump(X,Y))</tt>. In words, what are the preconditions for jumping from row X to row Y? How many actions are possible in the initial state of the game (cf. question 1)?
+</li><li>Pick any one of the actions &nbsp;<tt>jump(m,n)</tt>&nbsp; that are possible in the initial state and, with the help of the program clauses for &nbsp;<tt>next(F)</tt>, compute the new state after &nbsp;<tt>does(you,jump(m,n))</tt>. In words, what are the effects of jumping from X to Y?
+</li></ol><p>
+
+</p></li><li><b>Planning</b>
+
+<p>The program clauses for &nbsp;<tt>terminal</tt>&nbsp; and &nbsp;<tt>goal(you,100)</tt>&nbsp; respectively imply that the game ends when you are stuck (i.e. there are no more legal moves) and that you win the game when you can make the maximum of 4 moves before getting stuck. Find a plan (i.e. a sequence of 4 actions) that solves this problem! (Hint: there is more than one solution.)
+
+</p></li><li><b>Planning</b>
+
+<p>Bonus Challenge: We humans are often better than computers at generalising a solution. How would you solve the game if initially there were 1,000 coins in a row and the goal is to make the maximum of 500 moves without getting stuck?
+
+</p></li></ol>
+
+<p></p>
+<hr align="left">
+
+
+
+</body></html>
