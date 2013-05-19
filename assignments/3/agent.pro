@@ -36,7 +36,7 @@ insert_goal(Goal, [Intent|Intentions], Belife, [Intent|Intentions1]):-
 
 insert_goal(X, Intentions, _, [[X, []]|Intentions]).
 
-% is_member(Goal, Intentions): Check weather a given Goal is in the Intentions
+% is_member(+Goal, +Intentions): Check weather a given Goal is in the Intentions
 %   list. Each item in the Inteneiotns list is a two member list if the format
 %   [Goal, Plan]. The Plan is a list of actions.
 %
@@ -48,7 +48,7 @@ is_member(Goal, [Head|Tail]) :-
     not(member(Goal, Head)),
 	is_member(Goal, Tail).
 
-% gt(Goal, Plan, Belife): Goal is greater-than Plan (i.e. Goal1 > [Goal2|_]).
+% gt(+Goal, +Plan, -Belife): Goal is greater-than Plan (i.e. Goal1 > [Goal2|_]).
 %   The Goal is compared to the goal in the head of the Plan list and is greater
 %   if the Score (3rd param of goal) is greater, or if Scores are equal, the one
 %   with the shortest distance to the Belife.
@@ -64,59 +64,82 @@ gt(goal(X1, Y1, S1), [goal(X2, Y2, S2)|_], [at(X, Y)|_]) :-
     distance((X, Y), (X2, Y2), D2),
     D1 < D2.    % Comapre distances to Belife.
 
-% select_action(Beliefs, Intentions, Intentions1, Action): Selects the next 
+% select_action(+Beliefs, +Intentions, -Intentions1, -Action): Selects the next 
 %   action for the agent to perform from the list of Intentions. If there are
-%   none then it moves in the Y directoon my 1 (just as good as random?).
+%   none then it moves in the Y direction my 1 (just as good as random?).
 %
 
-% If the intentions are empty then just move in the Y direction by 1.
-% TODO: test.
-select_action([at(X, Y)], [], [], move(X, Y2)) :-
-    Y2 =:= Y + 1.
+% If the intentions are empty move towards the middle (5,5) and two-step.
+select_action([at(5, 5)], [], [], move(6, 5)).
+select_action([at(X, Y)], [], [], move(Xnew, Ynew)) :-
+    X < 5,
+    Xnew is X + 1,
+    Ynew = Y
+    ;
+    X > 5,
+    Xnew is X -1,
+    Ynew = Y
+    ;
+    Y < 5,
+    Ynew is Y + 1,
+    Xnew = X
+    ;
+    Y > 5,
+    Ynew is Y - 1,
+    Xnew = X.
 
 % If the action is good, use it and updated the Intentions list...
-% TODO: test.
-select_action(Beliefs, [Intent|Tail], [[Goal, NextActions]|Tail], Action) :-
+select_action(Belifes, [Intent|Tail], [[Goal, NextActions]|Tail], Action) :-
     decompose_intention(Intent, Goal, [Action|NextActions]),
     applicable(Belifes, Action).
 
 % ... otherwise actions is not applicable so create a new Plan for the Goal.
-% TODO: test.
-select_action(Beliefs, [Intent|Tail], [[Goal, Plan]|Tail], Action) :-
-    decompose_intention(Intent, Goal, [Action|_]),
-    not(applicable(Belifes, Action)),
-    new_plan(Goal, Belifes, [Action|Plan]).
+select_action(Belifes, [Intent|Tail], [[Goal, Plan]|Tail], Action) :-
+    decompose_intention(Intent, Goal, [BadAction|_]),
+    not(applicable(Belifes, BadAction)),
+    new_plan(Goal, Belifes, NewPlan),
+    next_action(NewPlan, Plan, Action).
 
-% decompose_intention(Intention, Goal, Plan): Extract Goal and Plan from 
+% next_action(+ExistingPlan, -Plan, -Action): Pops the first action off 
+%   ExistingPlan and returns the Plan without it and the first Action.
+%
+next_action([Action|Plan], Plan, Action).
+
+% decompose_intention(+Intention, -Goal, -Plan): Extract Goal and Plan from 
 %   Intention.
 %
+
 decompose_intention([Goal|Plan], Goal, Plan).
 
-% new_plan(Goal, Belifes, Plan): Generate a list of move() actions ending with a 
+% new_plan(+Goal, +Belifes, -Plan): Generate a list of move() actions ending with a 
 %   pickup() action based on where the robot is at() currently.
 %
-% TODO: test.
+
 new_plan(Goal, Belifes, Plan) :-
     new_plan(Goal, Belifes, [], Plan).
 
-new_plan(goal(X, Y), [at(X, Y)], PartialPlan, [pickup(X, Y)|PartialPlan]).
+new_plan(goal(X, Y, _), [at(X, Y)], PartialPlan, Plan) :-
+    reverse([pickup(X, Y)|PartialPlan], Plan).
 
 new_plan(Goal, [at(X, Y)], PartialPlan, Plan) :-
     vaild_move(X, Y, move(Xnew, Ynew)),
     h(move(Xnew, Ynew), Goal, at(X, Y)),
     new_plan(Goal, [at(Xnew, Ynew)], [move(Xnew, Ynew)|PartialPlan], Plan).
 
-% h(Move, Goal, Belife): Heristic function to determine weather a Move is in
+% h(+Move, +Goal, +Belife): Heuristic function to determine weather a Move is in
 %   the right direction or not.
+%   Since the move distance can only be 1 or -1 this is more or less boolean.
 %
-h(move(X, Y), goal(Xg, Yg), at(Xr,Yr)) :-
+
+h(move(X, Y), goal(Xg, Yg, _), at(Xr, Yr)) :-
     % Move has to be closer to the Goal than current robot position.
     distance((X, Y), (Xg, Yg), Dm),
     distance((Xr, Yr), (Xg, Yg), Dr),
     Dm < Dr.
 
-% vaild_move(X, Y, Move): Determin all valid moves for a given X, Y coordinate.
+% vaild_move(+X, +Y, -Move): Determin all valid moves for a given X, Y coordinate.
 %
+
 vaild_move(X, Y, Move) :-
     Dx is X +1,
     Move = move(Dx, Y)
@@ -130,11 +153,28 @@ vaild_move(X, Y, Move) :-
     Dy is Y - 1,
     Move = move(X, Dy).
 
-% update_beliefs(Observation, Beliefs, Beliefs1): update robots Belifes based 
-%   on Observations. Replace the old at() with the new at().
-update_beliefs(Belife, _, [Belife]).
+% reverse(+List, -Reverse)
+% reverse(+List, ?PartReversed, -Reversed): Reversed is obtained by adding the 
+%   elements of List in reverse order to PartReversed.
+%   See Bratko, 3rd Ed. p.188
 
-% update_intentions(Observation, Intentions, Intentions1): Update intentions 
+reverse(List, Reversed) :-
+    reverse(List, [], Reversed).
+
+reverse([], Reversed, Reversed).
+
+reverse([X|Rest], PartReversed, TotalReversed) :-
+    reverse(Rest, [X|PartReversed], TotalReversed).
+
+% update_beliefs(+Observation, @Beliefs, -Beliefs1): update robots Belifes based 
+%   on Observations. Replace the old at() with the new at().
+
+update_beliefs(at(X, Y), _, [at(X,Y)]).
+update_beliefs(_, Belifes, Belifes).    % ignore cleaned() observations.
+
+% update_intentions(+Observation, +Intentions, -Intentions1): Update intentions 
 %   based on Observations. Remove the goal once the junk has been cleaned. 
 %   Assuming its still the last goal to have been reached.
-update_intentions(cleaned(X, Y), [[goal(X, Y)|_]|Intentions1], Intentions1).
+
+update_intentions(cleaned(X, Y), [[goal(X, Y, _)|_]|Intentions1], Intentions1).
+update_intentions(_, Intentions, Intentions). % catch the rest to stop backtracking.
