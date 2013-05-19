@@ -1,12 +1,13 @@
-% Takes a list of events, each of the form junk(X,Y,S), and computes the 
-% corresponding list of goals for the agent, each of the form goal(X,Y,S).
+% trigger(+Events, -Goals): Takes a list of events, each of the form 
+%   junk(X,Y,S), and computes the corresponding list of goals for the agent, 
+%   each of the form goal(X,Y,S).
 % 
 
 trigger([], []).
 trigger([junk(X, Y, S)|Tail], [goal(X, Y, S)|Goals]) :-
     trigger(Tail, Goals).
 
-% incorporate_goals(Goals, Belifes, Intentions, Intentions1): Takes Goals list 
+% incorporate_goals(+Goals, +Belifes, +Intentions, -Intentions1): Takes Goals list 
 %   and inserts only the new goals into the Intentions list immediatly before 
 %   an intention with a goal of a lower value. By lower value first the Score
 %   is compared then the Manhattan distance if the scores are the same.
@@ -27,7 +28,7 @@ incorporate_goals([Goal|Tail], Belife, Intentions, Intentions1) :-
     insert_goal(Goal, Intentions, Belife, UpdatedIntentions),
     incorporate_goals(Tail, Belife, UpdatedIntentions, Intentions1).
 
-% insert_goal(Goal, Intentions, Belife, Intentions1): insert the Goal, as an 
+% insert_goal(+Goal, +Intentions, +Belife, -Intentions1): insert the Goal, as an 
 %   Intention i.e. [goal, plan], into the Intentions list before the Plan with
 %   a goal less than it (not greater than for decendig order).
 insert_goal(Goal, [Intent|Intentions], Belife, [Intent|Intentions1]):-
