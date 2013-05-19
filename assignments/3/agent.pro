@@ -31,6 +31,7 @@ incorporate_goals([Goal|Tail], Belife, Intentions, Intentions1) :-
 % insert_goal(+Goal, +Intentions, +Belife, -Intentions1): insert the Goal, as an 
 %   Intention i.e. [goal, plan], into the Intentions list before the Plan with
 %   a goal less than it (not greater than for decendig order).
+
 insert_goal(Goal, [Intent|Intentions], Belife, [Intent|Intentions1]):-
     not(gt(Goal, Intent, Belife)), !,
     insert_goal(Goal, Intentions, Belife, Intentions1).
@@ -104,6 +105,7 @@ select_action(Belifes, [Intent|Tail], [[Goal, Plan]|Tail], Action) :-
 % next_action(+ExistingPlan, -Plan, -Action): Pops the first action off 
 %   ExistingPlan and returns the Plan without it and the first Action.
 %
+
 next_action([Action|Plan], Plan, Action).
 
 % decompose_intention(+Intention, -Goal, -Plan): Extract Goal and Plan from 
@@ -171,6 +173,7 @@ reverse([X|Rest], PartReversed, TotalReversed) :-
 %   on Observations. Replace the old at() with the new at().
 
 update_beliefs(at(X, Y), _, [at(X,Y)]).
+
 update_beliefs(_, Belifes, Belifes).    % ignore cleaned() observations.
 
 % update_intentions(+Observation, +Intentions, -Intentions1): Update intentions 
@@ -178,4 +181,5 @@ update_beliefs(_, Belifes, Belifes).    % ignore cleaned() observations.
 %   Assuming its still the last goal to have been reached.
 
 update_intentions(cleaned(X, Y), [[goal(X, Y, _)|_]|Intentions1], Intentions1).
+
 update_intentions(_, Intentions, Intentions). % catch the rest to stop backtracking.
