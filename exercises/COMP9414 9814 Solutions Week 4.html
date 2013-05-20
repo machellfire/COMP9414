@@ -1,0 +1,157 @@
+
+<!-- saved from url=(0178)http://mahler.cse.unsw.edu.au/webcms2/course/showfile.php?cid=2294&color=lavendar&addr=/home/dbapache/data/webcms2/COMP/9414/2013/s1/Tutorials/COMP9414-ExerciseAnswers-Logic.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+  <title>COMP9414/9814 Solutions Week 4</title>
+<style><!-- A {text-decoration:none} --></style><style type="text/css"></style></head>
+
+<body alink="#660000" vlink="#000066" link="#800066" bgcolor="#ffffff">
+
+<h2><p></p><center><b><font color="#000066">
+COMP9414/9814 Artificial Intelligence<br>
+Session 1, 2013</font></b></center><p></p></h2>
+
+<h2><p></p><center><b>Exercises - Solutions - Week 4 - Logic</b></center><p></p></h2>
+
+<p><b><font size="-1">
+<script language="JavaScript">
+document.write("This page was last updated: " +
+document.lastModified);
+</script>This page was last updated: 04/08/2013 11:49:56
+</font>
+</b>
+</p>
+
+<hr align="left">
+<ol>
+
+<li><b>Propositional logic</b>
+<p>
+
+</p><ol type="a">
+<li> 12 models:<br>
+<tt>{p<sub>1</sub>}, {p<sub>2</sub>}, {p<sub>1</sub>,p<sub>2</sub>},<br>{p<sub>1</sub>,q<sub>1</sub>}, {p<sub>2</sub>,q<sub>1</sub>}, {p<sub>1</sub>,p<sub>2</sub>,q<sub>1</sub>},<br>{p<sub>1</sub>,q<sub>2</sub>}, {p<sub>2</sub>,q<sub>2</sub>}, {p<sub>1</sub>,p<sub>2</sub>,q<sub>2</sub>},<br>{p<sub>1</sub>,q<sub>1</sub>,q<sub>2</sub>}, {p<sub>2</sub>,q<sub>1</sub>,q<sub>2</sub>}, {p<sub>1</sub>,p<sub>2</sub>,q<sub>1</sub>,q<sub>2</sub>}</tt>
+
+<p>
+
+</p></li><li> 9 models:<br>
+<tt>{}, {q<sub>1</sub>}, {q<sub>2</sub>}, {q<sub>1</sub>,q<sub>2</sub>},<br>{p<sub>1</sub>,q<sub>1</sub>}, {p<sub>1</sub>,q<sub>1</sub>,q<sub>2</sub>},<br>{p<sub>2</sub>,q<sub>2</sub>}, {p<sub>2</sub>,q<sub>1</sub>,q<sub>2</sub>},<br>{p<sub>1</sub>,p<sub>2</sub>,q<sub>1</sub>,q<sub>2</sub>}</tt>
+
+<p>
+
+</p></li><li> 2 models:<br>
+<tt>{p<sub>1</sub>}, {p<sub>1</sub>,p<sub>2</sub>,q<sub>2</sub>}</tt>
+
+</li></ol>
+
+<p>
+
+</p></li><li><b>First-order logic</b>
+<p>
+
+</p><ol type="a">
+<li> <tt>&#8704;X &#8707;Y NaturalNumber(Y)&nbsp;&#8743;&nbsp;GreaterThan(Y,X) &lt;= NaturalNumber(X)</tt>
+</li><li> <tt>(&#8704;X Smart(X) &lt;= BuysPolicy(X)) &#8743; (&#8707;Y Smart(Y)&nbsp;&#8743;&nbsp;拾uysPolicy(Y))</tt>
+</li><li> <tt>&#8704;X &#8704;Y 昤haves(Y,Y) &lt;= Barber(X)&nbsp;&#8743;&nbsp;Shaves(X,Y)</tt>
+</li></ol>
+
+<p>
+
+</p></li><li><b>Logical consequences</b>
+<p>
+
+</p><ol type="a">
+<li> True.
+</li><li> Not true. Counterexample: &nbsp;<tt>{p(b)}</tt>&nbsp; is a model of &nbsp;<tt>(p(b) &lt;= p(a))&nbsp;&#8743;&nbsp;殆(a)</tt>&nbsp; but not of &nbsp;<tt>殆(b)</tt>.
+</li><li> True.
+</li><li> Not true. Counterexample: for any natural number there is a larger natural number, but there does not exist a natural number that is larger than all natural numbers.
+</li></ol>
+
+<p>
+
+</p></li><li><b>Game Description Language</b>
+<p>
+</p><ol type="a">
+<li> <p><b>Delete</b> all rules about turn-taking:</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;init(control(xplayer))</tt></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>
+  
+  &nbsp;&nbsp;&nbsp;legal(xplayer, noop) &lt;= true(control(oplayer))</td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;legal(oplayer, noop) &lt;= true(control(xplayer))</td></tr><tr><td>
+
+  &nbsp;&nbsp;&nbsp;next(control(xplayer)) &lt;= true(control(oplayer))</td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(control(oplayer)) &lt;= true(control(xplayer))
+  
+</td></tr></tbody></table>
+<p>and <b>modify</b> the rule</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;legal(P,mark(M,N)) &lt;= true(cell(M,N,b)) &#8743; true(control(P))</tt></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>
+  
+</td></tr></tbody></table>
+<p>accordingly:</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;legal(P,mark(M,N)) &lt;= role(P) &#8743; true(cell(M,N,b))</tt></td></tr><tr><td></td></tr><tr><td></td></tr><tr><td>
+  
+</td></tr></tbody></table>
+</li><li> <p><b>Strengthen</b> two of the update update rules,</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,o))</tt></td><td> &lt;= </td><td> does(oplayer,mark(M,N))</td></tr><tr><td></td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,W))</td><td> &lt;= </td><td>true(cell(M,N,W)) &#8743;
+  </td></tr><tr><td></td><td></td><td>does(P,mark(J,K)) &#8743;
+  </td></tr><tr><td></td><td></td><td>(distinct(M,J) &#8744; distinct(N,K))</td></tr><tr><td></td></tr><tr><td>
+  
+</td></tr></tbody></table>
+<p>as follows:</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,o))</tt></td><td> &lt;= </td><td> does(oplayer,mark(M,N)) &#8743; 查oes(xplayer,mark(M,N))</td></tr><tr><td></td></tr><tr><td>
+  &nbsp;&nbsp;&nbsp;next(cell(M,N,W))</td><td> &lt;= </td><td>true(cell(M,N,W)) &#8743;
+  </td></tr><tr><td></td><td></td><td>does(xplayer,mark(J1,K1)) &#8743;
+  </td></tr><tr><td></td><td></td><td>does(oplayer,mark(J2,K2)) &#8743;
+  </td></tr><tr><td></td><td></td><td>(distinct(M,J1) &#8744; distinct(N,K1)) &#8743;
+  </td></tr><tr><td></td><td></td><td>(distinct(M,J2) &#8744; distinct(N,K2))</td></tr><tr><td></td></tr><tr><td>
+  
+</td></tr></tbody></table>
+</li><li> <p><b>Rewrite</b> the rules defining the goal values as follows:</p>
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>
+  &nbsp;&nbsp;&nbsp;goal(xplayer,100) </tt></td><td> &lt;= </td><td> line(x) &#8743; 查raw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(xplayer, 50) </td><td> &lt;= </td><td> draw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(xplayer, 0) </td><td> &lt;= </td><td> line(o) &#8743; 查raw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer,100) </td><td> &lt;= </td><td> line(o) &#8743; 查raw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer, 50) </td><td> &lt;= </td><td> draw</td></tr><tr><td>
+&nbsp;&nbsp;&nbsp;goal(oplayer, 0) </td><td> &lt;= </td><td> line(x) &#8743; 查raw</td></tr><tr><td>
+  
+</td></tr></tbody></table>  
+<table style="font-family:courier;font-size:14px"><tbody><tr><td>
+  <tt>&nbsp;&nbsp;&nbsp;draw &lt;=
+柝ine(x) &#8743; 柝ine(o) &#8743; 殃pen
+  </tt>
+</td></tr>
+  <tr><td><tt>&nbsp;&nbsp;&nbsp;draw &lt;=
+line(x) &#8743; line(o)
+  </tt>
+</td></tr></tbody></table>  
+</li></ol>
+
+<!--The entire modified game description can be found here:
+
+<blockquote><a href="simultaneoustictactoe.gdl">simultaneoustictactoe.gdl</a></blockquote>
+
+<p>
+Here's a screenshot of a complete run:
+<blockquote><a href="Screenshot.png">Screenshot.png</a></blockquote>-->
+
+</li></ol>
+
+
+
+<p>
+</p><hr align="left">
+
+
+
+</body></html>
